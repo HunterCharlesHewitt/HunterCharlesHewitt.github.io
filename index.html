@@ -122,16 +122,14 @@
                 if(document.getElementById(str) != null && document.getElementById(str).value != "") {
                     ret += (document.getElementById(str).value + ",")
                 }
+                else if(str == 'PGID') {
+                  ret += '<REPLACE WITH PLAYER ID>,'
+                }
                 else {
                     ret += window.samplePlayerCsvList[i] + ","
                 }
             }
             ret = ret.substring(0, ret.length - 1);
-            // for (const [key, value] of Object.entries(window.constantMap)) {
-            //     if(document.getElementById(value) != null) {
-            //         console.log(document.getElementById(value).value);
-            //     }
-            // }
             console.log(ret)
             document.getElementById('csvParagraph').innerText = ret
                         document.getElementById('csvHeader').style = "visibility: visible"
