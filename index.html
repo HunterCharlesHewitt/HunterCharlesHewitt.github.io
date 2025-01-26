@@ -1,365 +1,41 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-
-        <script>
-        
-
-
-
-            function check(input, min, max) {
-              input = document.getElementById(input.id)
-              console.log(input.value)
-              if (input.value < min) {
-                input.setCustomValidity('The number can\'t be less than ' + min);
-                console.log('here')
-              } 
-              else if (input.value > max){
-                console.log("here1")
-                input.setCustomValidity('The number can\'t be greater than ' + max);
-              }
-              else {
-                console.log("here2")
-                // input is fine -- reset the error message
-                input.setCustomValidity('');
-              }
-              input.reportValidity()
-            }
-
-            window.csvList = ["PSA0","PSB0","PSA1","PSB1","PSA2","PSB2","PRL2","PSA3","PSB3","PSA4","PSB4","PSA5","PSB5","PSA6","PSB6","BSAA","BSBA","BSCA","BSFA","BSGA","PLHA","PRHA","PTHA","PFLA","PPLA","PFNA","PLNA","BSPA","PCSA","PLSA","BSSA","PTSA","TRTA","BSTA","PSTA","BSWA","TRCB","TRFB","PLIB","PFPB","TRPB","TRSB","PVSB","PKAC","PACC","PNEC","TRIC","PLMC","PMPC","PLSC","TRSC","PLZC","PTAD","PLBD","PGID","TGID","POID","PUND","PSPD","PAGE","PGHE","PUHE","PLPE","PBRE","PRSE","PEYE","PPBF","PRBF","TRCF","PSHG","PBSG","TRBH","PTGH","PSKH","PCPH","PLSH","PRSH","PCTH","PLTH","PRTH","PLCI","PAGI","PSKI","PDPI","PPTI","PINJ","PTAK","PPBK","PRBK","PNEK","TRFK","PFMK","PHCL","TRCL","PCEL","PLEL","PREL","PCOL","PROL","PLPL","PSPL","PLRL","PGSL","PLTL","TRTL","PCYL","PTAM","TCFM","TRHM","PLJM","PHLM","TSPM","TCSM","PLSM","PSTM","PHAN","PICN","ISCN","PJEN","PTEN","PLKN","PRKN","PCON","PHSN","PHTN","PSTN","PSBO","PVCO","TRDO","PEGO","PFHO","PLMO","PLPO","PDRO","PLBP","TRDP","TRFP","PTHP","PIMP","PJMP","PYRP","TRSP","PSXP","PCAR","TRBR","PJER","TRJR","PMOR","PTOR","PKPR","PLPR","PSPR","PLRR","PLTR","TRTR","PSTR","POVR","PAWR","PLWR","PRWR","PTAS","PPBS","PQBS","PRBS","TRCS","TRDS","PVIS","PFMS","PPOS","PEPS","TRTS","PVTS","BSAT","BSBT","TRCT","BSCT","BSFT","PHGT","BSGT","PWGT","PLHT","PCMT","BSPT","PKRT","BSST","BSTT","BSWT","PYWT","PELU","PLPU","TRWU","EPAV","PBCV","PLHW","TRSW","TRFY","PLHY","PJTY","PSTY","PLPm"]
-
-            window.samplePlayerCsvList = ["1788","0","0","0","0","0","31","0","0","0","0","0","0","0","0","9","9","10","10","10","24","24","31","0","6","Allen","Robinson II","1","1788","68","10","1788","0","9","89","8","4","1","53","0","1","0","0","30","92","0","1","18","1","95","1","24","6","50101","112","14","112","0","89","28","213","0","25","0","3","0","17","32","3","6","40","0","90","1","0","1","1","93","2","2","94","89","1","29","0","90","42","38","57","0","0","37","0","0","1","0","0","165","31","100","0","90","0","1","0","1","10","0","1","83","14","1","0","74","10","0","0","0","12","1","2","2","1","21","Detroit","0","0","1","0","3","0","1","90","2","1","0","2","30","10","95","7","1","0","83","0","0","1","0","10","25","26","0","80","61","0","70","87","88","0","0","15","23","0","39","4","0","0","10","4","NULL","0","1788","2","5","1","30","2","74","1","60","15","2047","0","72","3","2","5","2","87","44","1","3","85","0","0","1","-31","0","0","10"]
-            window.constantMap = {
-                POTENTIAL: 'PLPO',
-                OVERALL: 'POVR',
-                POSITION: 'PPOS',
-                PLAYER_ID: 'PGID',
-                TEAM_ID: 'TGID',
-                JERSEY_NUMBER: 'PJEN',
-                FIRST_NAME: 'PFNA',
-                LAST_NAME: 'PLNA',
-
-                PORTRAITID: 'PSXP',
-                WEIGHT: 'PWGT',
-                SKIN_COLOR: 'PCPH',
-                SKIN_TONE: 'PSKI',
-                HAIR_COLOR: 'PHCL',
-                HELMET: 'PHLM',
-
-                VISOR: 'PVIS',
-                FLAK_JACKET: 'PFLA',
-                FACEMASK: 'PFMK',
-
-                BIRTHDAY: 'PLBD',
-                COLLEGE: 'PCOL',
-                AGE: 'PAGE',
-                EXPERIENCE: 'PYRP',
-
-                SPEED: 'PSPD',
-                STAMINA: 'PSTA',
-                STRENGTH: 'PSTR',
-                JUMPING: 'PJMP',
-                AGILITY: 'PAGI',
-                AWARENESS: 'PAWR',
-                ACCELERATION: 'PACC',
-                INJURY: 'PINJ',
-
-                PLAY_ACTION: 'PPLA',
-                DEEP_THROW_ACCURACY: 'PTAD',
-                MEDIUM_THROW_ACCURACY: 'PTAM',
-                SHORT_THROW_ACCURACY: 'PTAS',
-                THROW_ACCURACY: 'PTHA',
-                THROW_POWER: 'PTHP',
-                THROW_ON_THE_RUN: 'PTOR',
-
-                STIFF_ARM: 'PLSA',
-                SPIN_MOVE: 'PLSM',
-                TRUCKING: 'PLTR',
-                BALL_CARRIER_VISION: 'PBCV',
-                CARRYING: 'PCAR',
-                ELUSIVENESS: 'PELU',
-                JUKE_MOVE: 'PLJM',
-
-                CATCH_IN_TRAFFIC: 'PLCI',
-                RELEASE: 'PLRL',
-                ROUTE_RUNNING: 'PLRR',
-                SPECTACULAR_CATCH: 'PLSC',
-                CATCHING: 'PCTH',
-
-                IMPACT_BLOCK: 'PLIB',
-                PASS_BLOCK_FOOTWORK: 'PPBF',
-                PASS_BLOCK: 'PPBK',
-                RUN_BLOCK_FOOTWORK: 'PRBF',
-                RUN_BLOCK: 'PRBK',
-                RUN_BLOCK_STRENGTH: 'PRBS',
-                PASS_BLOCK_STRENGTH: 'PPBS',
-
-                HIT_POWER: 'PLHT',
-                PLAY_RECOGNITION: 'PLPR',
-                PURSUIT: 'PLPU',
-                TACKLING: 'PTAK',
-
-                POWER_MOVES: 'PLPm',
-                BLOCK_SHEDDING: 'PBSG',
-                FINESSE_MOVES: 'PFMS',
-
-                MAN_COVERAGE: 'PLMC',
-                PRESS_COVERAGE: 'PLPE',
-                ZONE_COVERAGE: 'PLZC',
-                PRESS: 'PLPE',
-
-                KICK_RETURN: 'PKRT',
-
-                KICK_POWER: 'PKPR',
-                KICK_ACCURACY: 'PKAC'}
-        
-        function to_csv() {
-            ret = ""
-            for(i = 0; i <  window.csvList.length; ++i) {
-                str = window.csvList[i]
-                if(document.getElementById(str) != null && document.getElementById(str).value != "") {
-                    ret += (document.getElementById(str).value + ",")
-                }
-                else if(str == 'PGID') {
-                  ret += '<REPLACE WITH PLAYER ID>,'
-                }
-                else {
-                    ret += window.samplePlayerCsvList[i] + ","
-                }
-            }
-            ret = ret.substring(0, ret.length - 1);
-            console.log(ret)
-            document.getElementById('csvParagraph').innerText = ret
-                        document.getElementById('csvHeader').style = "visibility: visible"
-            document.getElementById('csvParagraph').style = "visibility: visible"
-            document.getElementById('csvButton').style = "visibility: visible"
-        }
-
-        function make_all(value) {
-            var children = document.getElementById("ratings").children;
-
-            var idArr = [];
-
-            for (var i = 0; i < children.length; i++) {
-                idArr.push(children[i].id);
-            }
-
-            console.log(idArr);
-            console.log('make all ' + value)
-            for (i = 0; i < idArr.length; ++i) {
-                if(document.getElementById(idArr[i]) != null)
-                document.getElementById(idArr[i]).value = value
-            }
-            console.log(idArr);
-            document.getElementById('PLPE').value = value
-        }
-
-        </script>
-    </head>
-<body>
-
-
-
-<h2>Create A Player</h2>
-<h3>Personal Information</h3>
-<iframe name="votar" style="display:none;"></iframe>
-<form action="to_csv()" method="post" target="votar">
-  First name:
-  <input type="text" id="PFNA" name="PFNA"><br>
-  Last name:
-  <input type="text" id="PLNA" name="PLNA"><br>
-  Potential:
-  <input type="number"  onkeyup="check(this, 0, 127)" id="PLPO" name="PLPO"><br>
-  Jersey Number:
-  <input type="number"  onkeyup="check(this, 0, 127)" id="PJEN" name="PJEN"><br>
-  Age:
-  <input type="number"  onkeyup="check(this, 0, 127)" id="PAGE" name="PAGE"><br>
-  Team:
-  <select name="teams" id="TGID">
-    <option value="1">Bears</option>
-    <option value="2">Bengals</option>
-    <option value="3">Bils</option>
-    <option value="4">Broncos</option>
-    <option value="5">Browns</option>
-    <option value="6">Buccaneers</option>
-    <option value="7">Cardinals</option>
-    <option value="8">Chargers</option>
-    <option value="9">Chiefs</option>
-    <option value="10">Colts</option>
-    <option value="11">Cowboys</option>
-    <option value="12">Dolphins</option>
-    <option value="13">Eagles</option>
-    <option value="14">Falcons</option>
-    <option value="15">Niners</option>
-    <option value="16">Giants</option>
-    <option value="17">Jaguars</option>
-    <option value="18">Jets</option>
-    <option value="19">Lions</option>
-    <option value="20">Packers</option>
-    <option value="21">Panthers</option>
-    <option value="22">Patriots</option>
-    <option value="23">Raiders</option>
-    <option value="24">Rams</option>
-    <option value="25">Ravens</option>
-    <option value="26">Commanders</option>
-    <option value="27">Saints</option>
-    <option value="28">Seahawks</option>
-    <option value="29">Steelers</option>
-    <option value="31">Titans</option>
-    <option value="30">Vikings</option>
-    <option value="32">Texans</option>
-  </select>
-</form>
-Position:
-<select name="positions" id="PPOS">
-    <option value="0">QB</option>
-    <option value="1">HB</option>
-    <option value="2">FB</option>
-    <option value="3">WR</option>
-    <option value="4">TE</option>
-    <option value="5">LT</option>
-    <option value="6">LG</option>
-    <option value="7">C</option>
-    <option value="8">RG</option>
-    <option value="9">RT</option>
-    <option value="10">LE</option>
-    <option value="11">RE</option>
-    <option value="12">DT</option>
-    <option value="13">LOLB</option>
-    <option value="14">MLB</option>
-    <option value="15">ROLB</option>
-    <option value="16">CB</option>
-    <option value="17">FS</option>
-    <option value="18">SS</option>
-    <option value="19">K</option>
-    <option value="20">P</option>
-  </select>
-<hr>
-<h3>Physical Traits</h3>
-Height (in inches):
-<input type="number" id="PFNA" name="PFNA"><br>
-Weight:
-<input type="number" id="PWGT" name="PWGT"><br>
-<hr>
-<hr>
-<h3>Ratings</h3>
-<button id="127" onclick="make_all(127)">Make All 127</button>
-<button id="99" onclick="make_all(99)">Make All 99</button>
-<button id="0" onclick="make_all(0)">Make All 0</button>
-<br>
-<div id="ratings">
-SPEED:
-<input type="number" onkeyup="check(this, 0, 127)" id="PSPD" name="PSPD"><br><br>
-STAMINA:
-<input type="number" onkeyup="check(this, 0, 127)" id="PSTA" name="PSTA"><br><br>
-STRENGTH:
-<input type="number" onkeyup="check(this, 0, 127)" id="PSTR" name="PSTR"><br><br>
-JUMPING:
-<input type="number" onkeyup="check(this, 0, 127)" id="PJMP" name="PJMP"><br><br>
-AGILITY:
-<input type="number" onkeyup="check(this, 0, 127)" id="PAGI" name="PAGI"><br><br>
-AWARENESS:
-<input type="number" onkeyup="check(this, 0, 127)" id="PAWR" name="PAWR"><br><br>
-ACCELERATION:
-<input type="number" onkeyup="check(this, 0, 127)" id="PACC" name="PACC"><br><br>
-INJURY:
-<input type="number" onkeyup="check(this, 0, 127)" id="PINJ" name="PINJ"><br><br>
-PLAY ACTION:
-<input type="number" onkeyup="check(this, 0, 127)" id="PPLA" name="PPLA"><br><br>
-DEEP THROW ACCURACY:
-<input type="number" onkeyup="check(this, 0, 127)" id="PTAD" name="PTAD"><br><br>
-MEDIUM THROW ACCURACY:
-<input type="number" onkeyup="check(this, 0, 127)" id="PTAM" name="PTAM"><br><br>
-SHORT THROW ACCURACY:
-<input type="number" onkeyup="check(this, 0, 127)" id="PTAS" name="PTAS"><br><br>
-THROW ACCURACY:
-<input type="number" onkeyup="check(this, 0, 127)" id="PTHA" name="PTHA"><br><br>
-THROW POWER:
-<input type="number" onkeyup="check(this, 0, 127)" id="PTHP" name="PTHP"><br><br>
-THROW ON THE RUN:
-<input type="number" onkeyup="check(this, 0, 127)" id="PTOR" name="PTOR"><br><br>
-CATCH IN TRAFFIC:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLCI" name="PLCI"><br><br>
-RELEASE:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLRL" name="PLRL"><br><br>
-ROUTE RUNNING:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLRR" name="PLRR"><br><br>
-SPECTACULAR CATCH:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLSC" name="PLSC"><br><br>
-CATCHING:
-<input type="number" onkeyup="check(this, 0, 127)" id="PCTH" name="PCTH"><br><br>
-IMPACT BLOCK:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLIB" name="PLIB"><br><br>
-PASS BLOCK FOOTWORK:
-<input type="number" onkeyup="check(this, 0, 127)" id="PPBF" name="PPBF"><br><br>
-PASS BLOCK:
-<input type="number" onkeyup="check(this, 0, 127)" id="PPBK" name="PPBK"><br><br>
-RUN BLOCK FOOTWORK:
-<input type="number" onkeyup="check(this, 0, 127)" id="PRBF" name="PRBF"><br><br>
-RUN BLOCK:
-<input type="number" onkeyup="check(this, 0, 127)" id="PRBK" name="PRBK"><br><br>
-RUN BLOCK STRENGTH:
-<input type="number" onkeyup="check(this, 0, 127)" id="PRBS" name="PRBS"><br><br>
-PASS BLOCK STRENGTH:
-<input type="number" onkeyup="check(this, 0, 127)" id="PPBS" name="PPBS"><br><br>
-HIT POWER:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLHT" name="PLHT"><br><br>
-PLAY RECOGNITION:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLPR" name="PLPR"><br><br>
-PURSUIT:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLPU" name="PLPU"><br><br>
-TACKLING:
-<input type="number" onkeyup="check(this, 0, 127)" id="PTAK" name="PTAK"><br><br>
-POWER MOVES:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLPm" name="PLPm"><br><br>
-BLOCK SHEDDING:
-<input type="number" onkeyup="check(this, 0, 127)" id="PBSG" name="PBSG"><br><br>
-FINESSE MOVES:
-<input type="number" onkeyup="check(this, 0, 127)" id="PFMS" name="PFMS"><br><br>
-MAN COVERAGE:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLMC" name="PLMC"><br><br>
-PRESS COVERAGE:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLPE" name="PLPE"><br><br>
-ZONE COVERAGE:
-<input type="number" onkeyup="check(this, 0, 127)" id="PLZC" name="PLZC"><br><br>
-KICK POWER:
-<input type="number" onkeyup="check(this, 0, 127)" id="PKPR" name="PKPR"><br><br>
-KICK ACCURACY:
-<input type="number" onkeyup="check(this, 0, 127)" id="PKAC" name="PKAC"><br><br>
-</div>
-<button onclick="to_csv()">Submit</button>
-<hr>
-<br>
-<style>
-    p {
-        width:250px;
-  padding-top:5px;
-  border-style:solid;
-  border-color:#336699;
-  border-width:1px;
-  padding-left:3px;
-  padding-bottom:10px;
-  word-wrap: break-word;
-}
-</style>
-
-<h3 id="csvHeader" style="visibility:hidden">Player CSV</h3>
-<p style="visibility:hidden" id="csvParagraph"></p>
-<button id="csvButton" style="visibility:hidden" onclick="copyToClipboard()">Copy To clipboard</button>
-<script>
-    function copyToClipboard() {
-    
-      /* Get the text field */
-      var copyText = document.getElementById("csvParagraph");
-        console.log(copyText.innerHTML)
-      
-    
-      /* Copy the text inside the text field */
-      navigator.clipboard.writeText(copyText.innerText);
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freeze Scrolling</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f4f4f4;
     }
-    </script>
-</body>
 
+    .iframe-container {
+      width: 600px; /* Adjust width to your desired visible area */
+      height: 1000px; /* Adjust height to your desired visible area */
+      overflow: hidden; /* Hide overflow to restrict scrolling */
+      position: relative;
+      border: 1px solid #000; /* Optional border for visual clarity */
+    }
+
+    iframe {
+      width: 100%; /* Make iframe width 100% of container */
+      height: calc(100% + 550px); /* Extend iframe height to cover the gap created by the offset */
+      position: absolute;
+      top: -550px; /* Offset to display the desired section */
+      left: 0;
+      border: none; /* Remove iframe borders */
+    }
+  </style>
+</head>
+<body>
+  <div class="iframe-container">
+    <iframe src="https://webusers.imj-prg.fr/~bernhard.keller/quivermutation/" scrolling="no"></iframe>
+  </div>
+</body>
 </html>
